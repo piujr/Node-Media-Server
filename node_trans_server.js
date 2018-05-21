@@ -56,25 +56,17 @@ class NodeTransServer {
       conf.mediaroot = this.config.http.mediaroot;
       conf.streamPath = streamPath;
       conf.stream = stream;
-      conf.args = args;      
+      conf.args = args;
       //conf.session = session.
       if (app === conf.app) {
-        let session = new NodeTransSession(conf);
-        session.args= args;
-        let sesId= context.sessions.get(id);
-        session.saveMyFile =sesId.saveMyFile;
+        let session = new NodeTransSession(conf);        
+          let sesId= context.sessions.get(id);
+          session.saveMyFile =sesId.saveMyFile;
         this.transSessions.set(id, session);
-       
-        session.on('end', () => {        
+        session.on('end', () => {                  
           this.transSessions.delete(id);
         });
-        session.run();
-        /*
-        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\n");
-        console.log(session);
-        console.log(session.FileName);
-        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\n");
-        */
+        session.run();        
       }
     }
   }

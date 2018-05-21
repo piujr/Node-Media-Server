@@ -333,10 +333,7 @@ class NodeRtmpSession {
     chunkMessageHeader.copy(chunks, chunksOffset);
     chunksOffset += chunkMessageHeader.length;
     if (useExtendedTimestamp) {
-      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-      console.log(packet);
-      console.log(header.timestamp, chunksOffset);
-      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+      //console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");      
       chunks.writeUInt32BE(header.timestamp, chunksOffset);
       chunksOffset += 4;
     }

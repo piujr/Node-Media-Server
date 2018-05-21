@@ -14,8 +14,7 @@ const fs = require('fs');
 class NodeTransSession extends EventEmitter {
   constructor(conf) {
     super();
-    this.conf = conf;
-    this.args = {};
+    this.conf = conf;    
     this.saveMyFile = "";
   }
 
@@ -30,9 +29,9 @@ class NodeTransSession extends EventEmitter {
       let now = new Date();
       let extension =  '.mp4';
       let mp4FileName = dateFormat('yyyy-mm-dd-HH-MM') + extension;      
-      console.log(this.conf);
+      //console.log(this.conf);
       if (this.saveMyFile && this.saveMyFile.length > 0){
-        mp4FileName= this.saveMyFile  ;
+          mp4FileName= this.saveMyFile ;
       }
       let mapMp4 = `${this.conf.mp4Flags}${ouPath}/${mp4FileName}|`;
       mapStr += mapMp4;
