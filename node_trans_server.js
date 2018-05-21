@@ -44,6 +44,7 @@ class NodeTransServer {
     Logger.log(`Node Media Trans Server started for apps: [ ${apps}] , MediaRoot: ${this.config.http.mediaroot}`);
   }
 
+
   onPostPublish(id, streamPath, args) {
     let regRes = /\/(.*)\/(.*)/gi.exec(streamPath);
     let [app, stream] = _.slice(regRes, 1);
@@ -55,14 +56,28 @@ class NodeTransServer {
       conf.mediaroot = this.config.http.mediaroot;
       conf.streamPath = streamPath;
       conf.stream = stream;
-      conf.args = args;
+      conf.args = args;      
+      //conf.session = session.
       if (app === conf.app) {
         let session = new NodeTransSession(conf);
+        session.args= args;
+        let sesId= context.sessions.get(id);
+        session.saveMyFile =sesId.saveMyFile;
         this.transSessions.set(id, session);
-        session.on('end', () => {
+        /*console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");        
+        console.log(sesId);
+        console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        */
+        session.on('end', () => {        
           this.transSessions.delete(id);
         });
         session.run();
+        /*
+        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\n");
+        console.log(session);
+        console.log(session.FileName);
+        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\n");
+        */
       }
     }
   }

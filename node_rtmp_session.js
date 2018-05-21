@@ -333,6 +333,10 @@ class NodeRtmpSession {
     chunkMessageHeader.copy(chunks, chunksOffset);
     chunksOffset += chunkMessageHeader.length;
     if (useExtendedTimestamp) {
+      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+      console.log(packet);
+      console.log(header.timestamp, chunksOffset);
+      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
       chunks.writeUInt32BE(header.timestamp, chunksOffset);
       chunksOffset += 4;
     }
@@ -679,6 +683,7 @@ class NodeRtmpSession {
     packet.header.length = packet.payload.length;
     packet.header.timestamp = this.parserPacket.clock;
     let rtmpChunks = this.rtmpChunksCreate(packet);
+    
     let flvTag = NodeFlvSession.createFlvTag(packet);
 
 
