@@ -73,6 +73,8 @@ class NodeRelayServer {
         let hasApp = conf.edge.match(/rtmp:\/\/([^\/]+)\/([^\/]+)/);
         conf.ffmpeg = this.config.relay.ffmpeg;
         conf.inPath = hasApp ? `${conf.edge}/${stream}` : `${conf.edge}/${streamPath}`;
+        //conf.inPath = 'rtsp://admin:dorado1234@181.45.252.26:554/Streaming/channels/301//live/pull12';
+
         conf.ouPath = `rtmp://localhost:${this.config.rtmp.port}/${streamPath}`;
         let session = new NodeRelaySession(conf);
         session.id = id;
@@ -81,7 +83,7 @@ class NodeRelayServer {
         });
         this.dynamicSessions.set(id, session);
         session.run();
-        Logger.log('[Relay dynamic pull] start', id, conf.inPath, ' to ', conf.ouPath);
+        Logger.log('[Relay dynamic pull] start', id, conf.inPath, ' to ', conf.ouPath, args, `${conf.edge}/${stream}` );
       }
     }
   }

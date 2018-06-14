@@ -32,10 +32,11 @@ class NodeTransSession extends EventEmitter {
       //console.log(this.conf);
       if (this.saveMyFile && this.saveMyFile.length > 0){
           mp4FileName= this.saveMyFile ;
+          let mapMp4 = `${this.conf.mp4Flags}${ouPath}/${mp4FileName}|`;
+          mapStr += mapMp4;
+          Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + ouPath + '/' + mp4FileName);
       }
-      let mapMp4 = `${this.conf.mp4Flags}${ouPath}/${mp4FileName}|`;
-      mapStr += mapMp4;
-      Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + ouPath + '/' + mp4FileName);
+      
     }
     if (this.conf.hls) {
       this.conf.hlsFlags = this.conf.hlsFlags ? this.conf.hlsFlags : '';
