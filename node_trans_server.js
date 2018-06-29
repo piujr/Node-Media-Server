@@ -62,6 +62,7 @@ class NodeTransServer {
         let session = new NodeTransSession(conf);        
           let sesId= context.sessions.get(id);
           session.saveMyFile =sesId.saveMyFile;
+          session.args =args;
         this.transSessions.set(id, session);
         session.on('end', () => {                  
           this.transSessions.delete(id);

@@ -16,6 +16,7 @@ class NodeTransSession extends EventEmitter {
     super();
     this.conf = conf;    
     this.saveMyFile = "";
+    this.args = "";
   }
 
   run() {
@@ -53,7 +54,16 @@ class NodeTransSession extends EventEmitter {
       Logger.log('[Transmuxing DASH] ' + this.conf.streamPath + ' to ' + ouPath + '/' + dashFileName);
     }
     mkdirp.sync(ouPath);
-    let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath, '-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
+
+    //timelimit
+    let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath,'-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
+    
+    if ((typeof this.args.time != 'undefined') && parseInt(this.args.time) > 0  ) {
+      
+      argv.splice(10,0,'-t',this.args.time);
+      Logger.log('Cambiando Argv '+argv);
+    }
+
     // Logger.debug(argv.toString());
     this.ffmpeg_exec = spawn(this.conf.ffmpeg, argv);
     this.ffmpeg_exec.on('error', (e) => {

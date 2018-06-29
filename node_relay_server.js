@@ -69,12 +69,18 @@ class NodeRelayServer {
     while (i--) {
       let conf = this.config.relay.tasks[i];
       let isPull = conf.mode === 'pull';
+        console.log(context.publishers);
       if (isPull && app === conf.app && !context.publishers.has(streamPath)) {
         let hasApp = conf.edge.match(/rtmp:\/\/([^\/]+)\/([^\/]+)/);
         conf.ffmpeg = this.config.relay.ffmpeg;
         conf.inPath = hasApp ? `${conf.edge}/${stream}` : `${conf.edge}/${streamPath}`;
         //conf.inPath = 'rtsp://admin:dorado1234@181.45.252.26:554/Streaming/channels/301//live/pull12';
-
+        conf.inPath = args.pr+"://"+args.us+":"+args.ps+"@"+args.ip+":"+args.pt+args.ur+"/"+streamPath;
+        console.log("KKKKKKKKKKKKKKKKKKKKKKK");
+        console.log(conf.inPath);
+        console.log(context.publishers);
+        console.log(args);
+        console.log("KKKKKKKKKKKKKKKKKKKKKKK");
         conf.ouPath = `rtmp://localhost:${this.config.rtmp.port}/${streamPath}`;
         let session = new NodeRelaySession(conf);
         session.id = id;
@@ -84,6 +90,9 @@ class NodeRelayServer {
         this.dynamicSessions.set(id, session);
         session.run();
         Logger.log('[Relay dynamic pull] start', id, conf.inPath, ' to ', conf.ouPath, args, `${conf.edge}/${stream}` );
+      }else{
+        console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+
       }
     }
   }
