@@ -60,7 +60,7 @@ class NodeTransSession extends EventEmitter {
     
     if ((typeof this.args.time != 'undefined') && parseInt(this.args.time) > 0  ) {
       
-      argv.splice(10,0,'-t',this.args.time);
+      argv.splice(11,0,'-t',this.args.time);
       Logger.log('Cambiando Argv '+argv);
     }
 
