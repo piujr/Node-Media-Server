@@ -14,7 +14,7 @@ const fs = require('fs');
 class NodeTransSession extends EventEmitter {
   constructor(conf) {
     super();
-    this.conf = conf;    
+    this.conf = conf;
     this.saveMyFile = "";
     this.args = "";
   }
@@ -29,7 +29,7 @@ class NodeTransSession extends EventEmitter {
       this.conf.mp4Flags = this.conf.mp4Flags ? this.conf.mp4Flags : '';
       let now = new Date();
       let extension =  '.mp4';
-      let mp4FileName = dateFormat('yyyy-mm-dd-HH-MM') + extension;      
+      let mp4FileName = dateFormat('yyyy-mm-dd-HH-MM') + extension;
       //console.log(this.conf);
       if (this.saveMyFile && this.saveMyFile.length > 0){
           mp4FileName= this.saveMyFile ;
@@ -37,7 +37,7 @@ class NodeTransSession extends EventEmitter {
           mapStr += mapMp4;
           Logger.log('[Transmuxing MP4] ' + this.conf.streamPath + ' to ' + ouPath + '/' + mp4FileName);
       }
-      
+
     }
     if (this.conf.hls) {
       this.conf.hlsFlags = this.conf.hlsFlags ? this.conf.hlsFlags : '';
@@ -57,7 +57,7 @@ class NodeTransSession extends EventEmitter {
 
     //timelimit
     let argv = ['-y','-i', inPath,'-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
-    
+
     if ((typeof this.args.time != 'undefined') && parseInt(this.args.time) > 0  ) {
       argv.splice(11,0,'-t',(parseInt(this.args.time) + 10));
       Logger.log('Cambiando Argv '+argv);
@@ -70,11 +70,11 @@ class NodeTransSession extends EventEmitter {
     });
 
     this.ffmpeg_exec.stdout.on('data', (data) => {
-       Logger.debug(`输出：${data}`);
+       //Logger.debug(`输出：${data}`);
     });
 
     this.ffmpeg_exec.stderr.on('data', (data) => {
-       Logger.debug(`错误：${data}`);
+       //Logger.debug(`错误：${data}`);
     });
 
     this.ffmpeg_exec.on('close', (code) => {
