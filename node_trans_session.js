@@ -56,10 +56,11 @@ class NodeTransSession extends EventEmitter {
     mkdirp.sync(ouPath);
 
     //timelimit
-    let argv = ['-y','-i', inPath,'-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
+    let argv = ['-y', '-fflags', 'nobuffer', '-analyzeduration', '1000000', '-i', inPath,'-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
+    //let argv = ['-y','-i', inPath,'-c:v', vc, '-c:a', ac, '-f', 'tee', '-map', '0:a?', '-map', '0:v?', mapStr];
 
     if ((typeof this.args.time != 'undefined') && parseInt(this.args.time) > 0  ) {
-      argv.splice(11,0,'-t',(parseInt(this.args.time) + 10));
+      argv.splice(11,0,'-t',(parseInt(this.args.time) + 60));
       Logger.log('Cambiando Argv '+argv);
     }
 
